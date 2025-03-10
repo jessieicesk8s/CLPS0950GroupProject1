@@ -1,6 +1,6 @@
 % Parameters
 num_trials = 5; % Number of trials
-matrix_size = 12; % Size of the matrix (12x12)
+matrix_size = 12; % Size of the matrix (12x12) change matrix size to 10x20
 duration = 5; % Time duration for displaying each matrix (in seconds)
 response_keys = {'Q', 'W', 'A', 'S'}; % Response keys corresponding to quadrants
 
@@ -53,11 +53,11 @@ for trial_idx = 1:num_trials
         reaction_times(trial_idx) = reaction_time;
         
         % Check if the key corresponds to the correct quadrant
-        correct_quadrant = get_quadrant(target_row, target_col);
+        correct_quadrant = get_quadrant(target_row, target_col, matrix_size);
         accuracy = strcmp(key_pressed, correct_quadrant);
-        accuracies(trial_idx) = accuracy;
+        accuracies(trial_idx) = accuracy; 
     else
-        % No key pressed, record reaction time as duration (indicating timeout)
+        % No key pressed, record reaction time as duration (indicating)
         reaction_times(trial_idx) = duration;
         accuracies(trial_idx) = 0; % No accuracy as no key was pressed
     end
@@ -75,7 +75,7 @@ disp(['Mean Reaction Time: ', num2str(mean_reaction_time), ' seconds']);
 disp(['Overall Accuracy: ', num2str(overall_accuracy), '%']);
 
 % Helper function to check the quadrant based on the target location
-function quadrant = get_quadrant(row, col)
+function quadrant = get_quadrant(row, col, matrix_size)
     if row <= matrix_size / 2 && col <= matrix_size / 2
         quadrant = 'Q'; % Top left
     elseif row <= matrix_size / 2 && col > matrix_size / 2
