@@ -30,7 +30,7 @@ end
 
 % Participant Instructions (up for debate)
 disp('Press the key that corresponds to the quadrant that contains the target ("X")');
-disp('Q = Top left, W = Top right, A = Bottom left, S = Bottom right');
+disp('Q = Top Left, W = Top Right, A = Bottom Left, S = Bottom Right');
 disp('Press any key to start the experiment.');
 pause; % Wait for participant to be ready
 
