@@ -99,7 +99,7 @@ clc;
 %Matrix 1e, Target Stimulus in Bottom Right Quadrant
 matrix_1e =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1e(7, 15) = 'X'; %Placing target stimulus in BR Quadrant
-disp(matrix_1e)
+disp(matrix_1e);
 
 tic; %Start timer for Matrix 1e Task
 while toc < 10
