@@ -1,11 +1,15 @@
 % Parameters
 num_trials = 5; % Number of trials
-matrix_size = 12; % Size of the matrix (12x12) change matrix size to 10x20
+matrix_size_rows = 10; % Number of rows in the matrix (10)
+matrix_size_cols = 20; % Number of columns in the matrix (20)
 duration = 5; % Time duration for displaying each matrix (in seconds)
 response_keys = {'Q', 'W', 'A', 'S'}; % Response keys corresponding to quadrants
 
 % Define the quadrants for the response keys
-quadrants = struct('Q', [1, 1], 'W', [1, matrix_size/2 + 1], 'A', [matrix_size/2 + 1, 1], 'S', [matrix_size/2 + 1, matrix_size/2 + 1]);
+quadrants = struct('Q', [1, 1], ...
+                   'W', [1, matrix_size_cols / 2 + 1], ...
+                   'A', [matrix_size_rows / 2 + 1, 1], ...
+                   'S', [matrix_size_rows / 2 + 1, matrix_size_cols / 2 + 1]);
 
 % Randomize the order of the matrices for the trials
 trial_order = randperm(num_trials);
@@ -16,36 +20,39 @@ accuracies = zeros(num_trials, 1);
 
 % Create the matrices with the target stimuli
 matrices = cell(1, num_trials); % To hold the matrices
-
 for i = 1:num_trials
-    matrix = repmat('+', matrix_size, matrix_size); % Create the matrix with "+"
+    matrix = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
     
     % Randomly choose a target location
-    target_row = randi(matrix_size);
-    target_col = randi(matrix_size);
+    target_row = randi(matrix_size_rows);
+    target_col = randi(matrix_size_cols);
     matrix(target_row, target_col) = 'X'; % Place the target stimulus
     
     matrices{i} = matrix; % Store the matrix
 end
 
-% Participant Instructions (up for debate)
+% Participant Instructions
 disp('Press the key that corresponds to the quadrant that contains the target ("X")');
 disp('Q = Top left, W = Top right, A = Bottom left, S = Bottom right');
 disp('Press any key to start the experiment.');
 pause; % Wait for participant to be ready
+
+% Create a figure window for the experiment 
+fig = figure('Name', 'Matrix Task', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
 
 % Trials
 for trial_idx = 1:num_trials
     % Get the matrix for the current trial in the randomized order
     matrix = matrices{trial_order(trial_idx)};
     
-    % Display the matrix
-    clc; % Clear the command window to simulate the display of the matrix
-    disp(matrix);
+    % Display the matrix on the figure window
+    clf(fig); % Clear the figure window
+    text(0.5, 0.5, matrix, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    axis off; % Hide axes for a clean view of the matrix
     
     % Start the timer and wait for a key press
     tic;
-    [key_pressed, time_pressed] = waitforkeypress(duration);
+    [key_pressed, time_pressed] = waitforkeypress(duration, fig);
     
     % Record the reaction time (if key was pressed)
     if ~isempty(key_pressed)
@@ -53,11 +60,11 @@ for trial_idx = 1:num_trials
         reaction_times(trial_idx) = reaction_time;
         
         % Check if the key corresponds to the correct quadrant
-        correct_quadrant = get_quadrant(target_row, target_col, matrix_size);
+        correct_quadrant = get_quadrant(target_row, target_col, matrix_size_rows, matrix_size_cols);
         accuracy = strcmp(key_pressed, correct_quadrant);
-        accuracies(trial_idx) = accuracy; 
+        accuracies(trial_idx) = accuracy;
     else
-        % No key pressed, record reaction time as duration (indicating)
+        % No key pressed, record reaction time as duration (indicating timeout)
         reaction_times(trial_idx) = duration;
         accuracies(trial_idx) = 0; % No accuracy as no key was pressed
     end
@@ -75,30 +82,38 @@ disp(['Mean Reaction Time: ', num2str(mean_reaction_time), ' seconds']);
 disp(['Overall Accuracy: ', num2str(overall_accuracy), '%']);
 
 % Helper function to check the quadrant based on the target location
-function quadrant = get_quadrant(row, col, matrix_size)
-    if row <= matrix_size / 2 && col <= matrix_size / 2
+function quadrant = get_quadrant(row, col, matrix_size_rows, matrix_size_cols)
+    if row <= matrix_size_rows / 2 && col <= matrix_size_cols / 2
         quadrant = 'Q'; % Top left
-    elseif row <= matrix_size / 2 && col > matrix_size / 2
+    elseif row <= matrix_size_rows / 2 && col > matrix_size_cols / 2
         quadrant = 'W'; % Top right
-    elseif row > matrix_size / 2 && col <= matrix_size / 2
+    elseif row > matrix_size_rows / 2 && col <= matrix_size_cols / 2
         quadrant = 'A'; % Bottom left
     else
         quadrant = 'S'; % Bottom right
     end
 end
 
-% Function to wait for key press or timeout
-function [key, time] = waitforkeypress(timeout)
+% Function to wait for key press or timeout (inside the figure window)
+function [key, time] = waitforkeypress(timeout, fig)
     key = ''; % Initialize
     time = NaN;
+    
+    % Set the figure to capture key presses
+    set(fig, 'KeyPressFcn', @(src, event) keyPressCallback(src, event));
+    
     t_start = tic;
     
     while toc(t_start) < timeout
-        % Check if a key was pressed
-        if waitforbuttonpress
-            key = get(gcf, 'CurrentKey'); % Get the key that was pressed
-            time = toc(t_start); % Record the time when key was pressed
-            break;
-        end
+        % Wait for key press
+        pause(0.01); % Small pause to allow the figure to process events
+    end
+    
+    % Cleanup after timeout or key press
+    set(fig, 'KeyPressFcn', ''); % Stop capturing keys
+    
+    function keyPressCallback(src, event)
+        key = event.Key; % Capture the key pressed
+        time = toc(t_start); % Record the time when key was pressed
     end
 end
