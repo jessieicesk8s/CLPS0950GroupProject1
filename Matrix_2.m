@@ -26,19 +26,18 @@ for i = 1:num_trials
     % Randomly choose a target location
     target_row = randi(matrix_size_rows);
     target_col = randi(matrix_size_cols);
-    matrix(target_row, target_col) = 'X'; % Place the target stimulus
-    
+    matrix(target_row, target_col) = 'x'; % Place the target stimulus
     matrices{i} = matrix; % Store the matrix
 end
 
 % Participant Instructions
-disp('Press the key that corresponds to the quadrant that contains the target ("X")');
+disp('Press the key that corresponds to the quadrant that contains the target ("x  ")');
 disp('Q = Top Left, W = Top Right, A = Bottom Left, S = Bottom Right');
 disp('Press any key to start the experiment.');
 pause; % Wait for participant to be ready
 
 % Create a figure window for the experiment 
-fig = figure('Name', 'Matrix Task', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
+fig = figure('Name', 'Stimulus Search', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
 
 % Trials
 for trial_idx = 1:num_trials
