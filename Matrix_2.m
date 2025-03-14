@@ -22,7 +22,6 @@ accuracies = zeros(num_trials, 1);
 matrices = cell(1, num_trials); % To hold the matrices
 for i = 1:num_trials
     matrix = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
-    
     % Randomly choose a target location
     target_row = randi(matrix_size_rows);
     target_col = randi(matrix_size_cols);
@@ -30,37 +29,49 @@ for i = 1:num_trials
     matrices{i} = matrix; % Store the matrix
 end
 
-% Participant Instructions
-disp('Press the key that corresponds to the quadrant that contains the target ("x  ")');
-disp('Q = Top Left, W = Top Right, A = Bottom Left, S = Bottom Right');
-disp('Press any key to start the experiment.');
-pause; % Wait for participant to be ready
-
-% Create a figure window for the experiment 
+% Create a figure window for the experiment
 fig = figure('Name', 'Stimulus Search', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
+
+% Display instructions in the figure window
+instructions = sprintf(['Press the key that corresponds to the quadrant that contains the target ("x  ")\n' ...
+                        'Q = Top Left, W = Top Right, A = Bottom Left, S = Bottom Right\n\n' ...
+                        'Press any key to start the experiment.']);
+text(0.5, 0.5, instructions, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+axis off; % Hide axes for a clean view of the instructions
+
+% Wait for the participant to press any key to start
+disp('Instructions displayed. Press any key to start.');
+pause;
+
+% Clear the instructions and begin the trials
+clf(fig); % Clear the figure window
 
 % Trials
 for trial_idx = 1:num_trials
     % Get the matrix for the current trial in the randomized order
     matrix = matrices{trial_order(trial_idx)};
     
-    % Display the matrix on the figure window
+    % Clear the figure window before displaying the next matrix
     clf(fig); % Clear the figure window
+    
+    % Display the matrix on the figure window
     text(0.5, 0.5, matrix, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
     axis off; % Hide axes for a clean view of the matrix
     
-    % Start the timer and wait for a key press
-    tic;
+    % Start timing before the matrix is displayed
+    t_start = tic;  % Start the timer right before the matrix is shown
+    
+    % Wait for the participant to press a key or timeout
     [key_pressed, time_pressed] = waitforkeypress(duration, fig);
     
     % Record the reaction time (if key was pressed)
     if ~isempty(key_pressed)
-        reaction_time = toc; % Time from the start of the display to key press
+        reaction_time = toc(t_start); % Time from the start of the display to key press
         reaction_times(trial_idx) = reaction_time;
         
         % Check if the key corresponds to the correct quadrant
         correct_quadrant = get_quadrant(target_row, target_col, matrix_size_rows, matrix_size_cols);
-        accuracy = strcmp(key_pressed, correct_quadrant);
+        accuracy = strcmpi(key_pressed, correct_quadrant); 
         accuracies(trial_idx) = accuracy;
     else
         % No key pressed, record reaction time as duration (indicating timeout)
@@ -68,9 +79,14 @@ for trial_idx = 1:num_trials
         accuracies(trial_idx) = 0; % No accuracy as no key was pressed
     end
     
-    % Pause briefly before the next trial
-    pause(0.5);
+    % Show when trials are completed? idk if that really helps anything
+    disp(['Finished Trial ', num2str(trial_idx)]);
+    
+    % Pause briefly before the next trial (optional)
+    pause(0.5); % Short pause between trials
 end
+
+
 
 % Compute and display the results
 mean_reaction_time = mean(reaction_times);
