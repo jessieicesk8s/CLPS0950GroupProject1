@@ -44,7 +44,7 @@ for trial_idx = 1:num_trials
     
     % Display the matrix on the figure window
     text(0.5, 0.5, matrix, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
-    axis off; % Hide axes
+    axis off; % Hide axes for a clean view of the matrix
     
     % Start timing as the matrix is displayed
     t_start = tic;  % Start the timer right a the matrix is shown
