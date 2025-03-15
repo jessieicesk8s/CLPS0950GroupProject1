@@ -20,12 +20,12 @@ accuracies = zeros(num_trials, 1);
 % Create the matrices with the target stimuli
 matrices = cell(1, num_trials); % To hold the matrices
 for i = 1:num_trials
-    matrix = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
+    matrix2 = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
     % Randomly choose a target location
     target_row = randi(matrix_size_rows);
     target_col = randi(matrix_size_cols);
-    matrix(target_row, target_col) = 'x'; % Place the target stimulus
-    matrices{i} = matrix; % Store the matrix
+    matrix2(target_row, target_col) = 'x'; % Place the target stimulus
+    matrices{i} = matrix2; % Store the matrix
 end
 
 % Create a figure window for the experiment
@@ -37,13 +37,13 @@ clf(fig); % Clear the figure window
 % Trials
 for trial_idx = 1:num_trials
     % Get the matrix for the current trial in the randomized order
-    matrix = matrices{trial_order(trial_idx)};
+    matrix2 = matrices{trial_order(trial_idx)};
     
     % Clear the figure window before displaying the next matrix
     clf(fig); % Clear the figure window
     
     % Display the matrix on the figure window
-    text(0.5, 0.5, matrix, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    text(0.5, 0.5, matrix2, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
     axis off; % Hide axes
     
     % Start timing as the matrix is displayed
