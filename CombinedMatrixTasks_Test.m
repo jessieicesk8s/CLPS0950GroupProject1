@@ -161,7 +161,6 @@ clf(fig);
 num_trials = 5; % Number of trials
 matrix_size_rows = 10; % Number of rows in the matrix (10)
 matrix_size_cols = 20; % Number of columns in the matrix (20)
-duration = 5; % Time duration for displaying each matrix (in seconds)
 response_keys = {'q', 'w', 'a', 's'}; % Response keys corresponding to quadrants
 
 % Define the quadrants for the response keys
@@ -180,31 +179,34 @@ accuracies = zeros(num_trials, 1);
 % Create the matrices with the target stimuli
 matrices = cell(1, num_trials); % To hold the matrices
 for i = 1:num_trials
-    matrix = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
+    matrix2 = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
     % Randomly choose a target location
     target_row = randi(matrix_size_rows);
     target_col = randi(matrix_size_cols);
-    matrix(target_row, target_col) = 'x'; % Place the target stimulus
-    matrices{i} = matrix; % Store the matrix
+    matrix2(target_row, target_col) = 'x'; % Place the target stimulus
+    matrices{i} = matrix2; % Store the matrix
 end
 
 % Trials
 for trial_idx = 1:num_trials
     % Get the matrix for the current trial in the randomized order
-    matrix = matrices{trial_order(trial_idx)};
+    matrix2 = matrices{trial_order(trial_idx)};
     
     % Clear the figure window before displaying the next matrix
     clf(fig); % Clear the figure window
     
     % Display the matrix on the figure window
-    text(0.5, 0.5, matrix, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
-    axis off; % Hide axes for a clean view of the matrix
+    text(0.5, 0.5, matrix2, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    axis off; % Hide axes
     
-    % Start timing before the matrix is displayed
-    t_start = tic;  % Start the timer right before the matrix is shown
+    % Start timing as the matrix is displayed
+    t_start = tic;  % Start the timer right a the matrix is shown
     
-    % Wait for the participant to press a key or timeout
-    [key_pressed, time_pressed] = waitforkeypress(duration, fig);
+    % Pass matrix size to the figure using 'UserData'
+    set(fig, 'UserData', struct('matrix_size_rows', matrix_size_rows, 'matrix_size_cols', matrix_size_cols));
+    
+    % Wait for the participant to press a key 
+    [key_pressed, time_pressed] = waitforkeypress(fig, t_start);
     
     % Record the reaction time (if key was pressed)
     if ~isempty(key_pressed)
@@ -216,52 +218,62 @@ for trial_idx = 1:num_trials
         accuracy = strcmpi(key_pressed, correct_quadrant); 
         accuracies(trial_idx) = accuracy;
     else
-        % No key pressed, record reaction time as duration (indicating timeout)
-        reaction_times(trial_idx) = duration;
+        % No key pressed, do not record reaction time
+        reaction_times(trial_idx) = NaN; % Use NaN to indicate no response
         accuracies(trial_idx) = 0; % No accuracy as no key was pressed
     end
     
-    % Show when trials are completed? idk if that really helps anything
+    % Show when trials are completed
     disp(['Finished Trial ', num2str(trial_idx)]);
     
-    % Pause briefly before the next trial (optional)
+    % Pause briefly before the next trial 
     pause(0.5); % Short pause between trials
 end
 
 % Helper function to check the quadrant based on the target location
 function quadrant = get_quadrant(row, col, matrix_size_rows, matrix_size_cols)
     if row <= matrix_size_rows / 2 && col <= matrix_size_cols / 2
-        quadrant = 'q'; % Top left
+        quadrant = 'Q'; % Top left
     elseif row <= matrix_size_rows / 2 && col > matrix_size_cols / 2
-        quadrant = 'w'; % Top right
+        quadrant = 'W'; % Top right
     elseif row > matrix_size_rows / 2 && col <= matrix_size_cols / 2
-        quadrant = 'a'; % Bottom left
+        quadrant = 'A'; % Bottom left
     else
-        quadrant = 's'; % Bottom right
+        quadrant = 'S'; % Bottom right
     end
 end
 
-% Function to wait for key press or timeout (inside the figure window)
-function [key, time] = waitforkeypress(timeout, fig)
+% Function to wait for key press inside the figure window
+function [key, time] = waitforkeypress(fig, t_start)
     key = ''; % Initialize
     time = NaN;
     
     % Set the figure to capture key presses
     set(fig, 'KeyPressFcn', @(src, event) keyPressCallback(src, event));
     
-    t_start = tic;
-    
-    while toc(t_start) < timeout
-        % Wait for key press
-        pause(0.01); % Small pause to allow the figure to process events
+    % Wait indefinitely for a key press
+    while isempty(key)
+        pause(0.01); % Small pause
     end
     
-    % Cleanup after timeout or key press
+    % Cleanup after key press
     set(fig, 'KeyPressFcn', ''); % Stop capturing keys
     
     function keyPressCallback(src, event)
         key = event.Key; % Capture the key pressed
         time = toc(t_start); % Record the time when key was pressed
+        
+        % Get matrix size
+        data = get(fig, 'UserData');
+        matrix_size_rows = data.matrix_size_rows;
+        matrix_size_cols = data.matrix_size_cols;
+        
+        % Change the matrix immediately upon key press
+        clf(fig); % Clear the figure window
+        new_matrix = repmat('+', matrix_size_rows, matrix_size_cols);
+        text(0.5, 0.5, new_matrix, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+        axis off;
+        drawnow; % Immediately update the figure
     end
 end
 
@@ -276,9 +288,10 @@ mean_reactiontime = mean(ET);
 overall_accuracy1 = mean(IC) * 100;
 
 %Brianna's Matrix 2 Results
-mean_reaction_time = mean(reaction_times);
-overall_accuracy = mean(accuracies) * 100; % Convert to percentage
 
+% Compute and display the results
+mean_reaction_time = mean(reaction_times, 'omitnan'); % Compute mean, ignoring NaNs
+overall_accuracy = mean(accuracies) * 100; % Convert to percentage
 
 final_results = sprintf(['Matrix 1 Results\n\n' ...
     'Mean Reaction Time: ', num2str(mean_reactiontime), ' seconds\n'...
