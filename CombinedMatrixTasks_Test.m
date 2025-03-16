@@ -1,31 +1,31 @@
-%Have both tasks run within a singular code..?
+%Consolidating Jessica's Matrix1 and Brianna's Matrix_2 Tasks into one cohesive experiment
 
-%Participant Instructions
-fig = figure('Name', 'Stimulus Search', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
+%Participant Instructions for the Experiment
+fig = figure('Name', 'Stimulus Search', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none'); %Create a figure window
 instructions = sprintf(['Press the key that corresponds to the quadrant that contains the target ("X")\n\n' ...
     'Q = Top Left, W = Top Right, A = Bottom Left, S = Bottom Right\n\n' ...
-    'Press any key to start the experiment.']);
-text(0.5, 0.5, instructions, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    'Press any key to start the experiment.']); %Define instructions variable
+text(0.5, 0.5, instructions, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display instructions in figure window
 axis off;
 disp('Instructions displayed in separate window. Press any key to start.')
-pause;
+pause; %Wait for participant to press a key to start
 
 clf(fig); %Clear the figure window
-text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
 axis off;
 
-%Below are Matrices 1a-1e
+%Below are Matrices 1a-1e (Jessica's Matrices)
 %Matrix 1a, Target Stimulus in Upper Left Quadrant
 matrix_1a = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1a(2, 4) = 'X'; %Placing target stimulus in UL Quadrant
 disp(matrix_1a)
 
 tic; %Start timer for Matrix 1a Task
-while toc < 10
-    if waitforbuttonpress
-        elapsed_time_a = toc;
-        key = get(gcf, 'CurrentCharacter');
-        if key == 'q'
+while toc < 10 %Setting a duration of max 10 seconds
+    if waitforbuttonpress %Wait for participant to press a key
+        elapsed_time_a = toc; %Timer stops when key is pressed and time is recorded
+        key = get(gcf, 'CurrentCharacter'); %Recognize which key is pressed
+        if key == 'q' %Check if key pressed was the correct one
             is_correct_a = true;
             true = 1;
         else
@@ -36,11 +36,11 @@ while toc < 10
     end
 end
 
-pause(0.5);
-clc;
+pause(0.5); %Brief pause between matrices
+clc; %Clear command window
 
-clf(fig);
-text(0.5, 0.5, matrix_1b, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+clf(fig); %Clear figure window
+text(0.5, 0.5, matrix_1b, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1b
 axis off; 
 
 %Matrix 1b, Target Stimulus in Bottom Right Quadrant
@@ -49,11 +49,11 @@ matrix_1b(8, 18) = 'X'; %Placing target stimulus in BR Quadrant
 disp(matrix_1b)
 
 tic; %Start timer for Matrix 1b Task
-while toc < 10
-    if waitforbuttonpress
-        elapsed_time_b = toc;
-        key = get(gcf, 'CurrentCharacter');
-        if key == 's'
+while toc < 10 %Set duration of max 10 seconds
+    if waitforbuttonpress %Wait for key to be pressed
+        elapsed_time_b = toc; %Timer stops when key is pressed and time is recorded
+        key = get(gcf, 'CurrentCharacter'); %Recognize which key is pressed
+        if key == 's' %Check if key pressed was correct one
             is_correct_b = true;
             true = 1;
         else
@@ -64,11 +64,11 @@ while toc < 10
     end
 end
 
-pause(0.5);
-clc;
+pause(0.5); %Brief pause between matrices
+clc; %Clear command window
 
-clf(fig);
-text(0.5, 0.5, matrix_1c, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+clf(fig); %Clear figure window
+text(0.5, 0.5, matrix_1c, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1c
 axis off; 
 
 %Matrix 1c, Target Stimulus in Upper Right Quadrant
@@ -77,11 +77,11 @@ matrix_1c(3, 16) = 'X'; %Placing target stimulus in UR Quadrant
 disp(matrix_1c)
 
 tic; %Start timer for Matrix 1c Task
-while toc < 10
-    if waitforbuttonpress
-        elapsed_time_c = toc;
-        key = get(gcf, 'CurrentCharacter');
-        if key == 'w'
+while toc < 10 %Set duration of max 10 seconds
+    if waitforbuttonpress %Wait for key press from participant
+        elapsed_time_c = toc; %Timer stops when key is pressed and time is recorded
+        key = get(gcf, 'CurrentCharacter'); %Recognize which key is pressed
+        if key == 'w' %Check if key pressed was correct one
             is_correct_c = true;
             true = 1;
         else
@@ -92,11 +92,11 @@ while toc < 10
     end
 end
 
-pause(0.5);
-clc;
+pause(0.5); %Brief pause between matrices
+clc; %Clear command window
 
-clf(fig);
-text(0.5, 0.5, matrix_1d, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+clf(fig); %Clear figure window
+text(0.5, 0.5, matrix_1d, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1d
 axis off; 
 
 %Matrix 1d, Target Stimulus in Bottom Left Quadrant
@@ -105,11 +105,11 @@ matrix_1d(10, 8) = 'X'; %Placing target stimulus in BL Quadrant
 disp(matrix_1d)
 
 tic; %Start timer for Matrix 1d Task
-while toc < 10
-    if waitforbuttonpress
-        elapsed_time_d = toc;
-        key = get(gcf, 'CurrentCharacter');
-        if key == 'a'
+while toc < 10 %Set duration of max 10 seconds
+    if waitforbuttonpress %Wait for key press
+        elapsed_time_d = toc; %Timer stops when key is pressed and time is recorded
+        key = get(gcf, 'CurrentCharacter'); %Recognize which key is pressed
+        if key == 'a' %Check if key pressed was correct one
             is_correct_d = true;
             true = 1;
         else
@@ -120,11 +120,11 @@ while toc < 10
     end
 end
 
-pause(0.5);
-clc;
+pause(0.5); %Brief pause between matrices
+clc; %Clear command window
 
-clf(fig);
-text(0.5, 0.5, matrix_1e, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+clf(fig); %Clear figure window
+text(0.5, 0.5, matrix_1e, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1e
 axis off; 
 
 %Matrix 1e, Target Stimulus in Bottom Right Quadrant
@@ -133,11 +133,11 @@ matrix_1e(7, 15) = 'X'; %Placing target stimulus in BR Quadrant
 disp(matrix_1e);
 
 tic; %Start timer for Matrix 1e Task
-while toc < 10
-    if waitforbuttonpress
-        elapsed_time_e = toc;
-        key = get(gcf, 'CurrentCharacter');
-        if key == 's'
+while toc < 10 %Duration of max 10 seconds
+    if waitforbuttonpress %Wait for key press
+        elapsed_time_e = toc; %Timer stops when key is pressed and time is recorded
+        key = get(gcf, 'CurrentCharacter'); %Recognize which key is pressed
+        if key == 's' %Check if key pressed was correct
             is_correct_e = true;
             true = 1;
         else
@@ -148,14 +148,11 @@ while toc < 10
     end
 end
 
-pause(0.5);
-clc;
-clf(fig);
+pause(0.5); %Brief pause between matrices
+clc; %Clear command window
+clf(fig); %Clear figure window
 
-%Start of Brianna's Code!
-%Start of Brianna's Code!
-%Start of Brianna's Code!
-
+%Start of Brianna's Matrix_2 Task
 
 % Parameters
 num_trials = 5; % Number of trials
@@ -277,15 +274,15 @@ function [key, time] = waitforkeypress(fig, t_start)
     end
 end
 
-clc;
-clf(fig);
+clc; %Clear command window
+clf(fig); %Clear figure window
 
 %Jessica's Matrix 1 Task Results
-ET = ([elapsed_time_a, elapsed_time_b, elapsed_time_c, elapsed_time_d, elapsed_time_e]);
-IC = ([is_correct_a, is_correct_b, is_correct_c, is_correct_d, is_correct_e]);
+ET = ([elapsed_time_a, elapsed_time_b, elapsed_time_c, elapsed_time_d, elapsed_time_e]); %Assign elapsed time data to variable ET
+IC = ([is_correct_a, is_correct_b, is_correct_c, is_correct_d, is_correct_e]); %Assign accuracy data to variable IC
 
-mean_reactiontime = mean(ET);
-overall_accuracy1 = mean(IC) * 100;
+mean_reactiontime = mean(ET); %Calculate mean of previously defined ET data
+overall_accuracy1 = mean(IC) * 100; %Calculate mean of previously defined IC data
 
 %Brianna's Matrix 2 Results
 
@@ -293,12 +290,13 @@ overall_accuracy1 = mean(IC) * 100;
 mean_reaction_time = mean(reaction_times, 'omitnan'); % Compute mean, ignoring NaNs
 overall_accuracy = mean(accuracies) * 100; % Convert to percentage
 
+%Display final results in figure window
 final_results = sprintf(['Matrix 1 Results\n\n' ...
     'Mean Reaction Time: ', num2str(mean_reactiontime), ' seconds\n'...
     'Overall Percent Accurate: ', num2str(overall_accuracy1), '\n\n\n' ...
     'Matrix 2 Results\n\n' ...
     'Mean Reaction Time: ', num2str(mean_reaction_time), ' seconds\n' ...
-    'Overall Percent Accurate: ', num2str(overall_accuracy)]);
-text(0.5, 0.5, final_results, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    'Overall Percent Accurate: ', num2str(overall_accuracy)]); %Define final_results to be displayed
+text(0.5, 0.5, final_results, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display previously defined final results of experiment
 axis off;
-disp('Experiment is complete. Thank you for your partcipation!')
+disp('Experiment is complete. Thank you for your partcipation!') %Display this final message for participants in the command window
