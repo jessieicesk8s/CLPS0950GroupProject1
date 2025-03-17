@@ -18,7 +18,6 @@ clf(fig); %Clear the figure window
 %Matrix 1a, Target Stimulus in Upper Left Quadrant
 matrix_1a = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1a(2, 4) = 'X'; %Placing target stimulus in UL Quadrant
-%disp(matrix_1a)
 
 text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
 axis off;
@@ -49,7 +48,6 @@ clf(fig); %Clear figure window
 %Matrix 1b, Target Stimulus in Bottom Right Quadrant
 matrix_1b = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1b(8, 18) = 'X'; %Placing target stimulus in BR Quadrant
-disp(matrix_1b)
 
 text(0.5, 0.5, matrix_1b, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1b
 axis off; 
@@ -79,7 +77,7 @@ clf(fig); %Clear figure window
 %Matrix 1c, Target Stimulus in Upper Right Quadrant
 matrix_1c = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1c(3, 16) = 'X'; %Placing target stimulus in UR Quadrant
-disp(matrix_1c)
+
 text(0.5, 0.5, matrix_1c, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1c
 axis off; 
 
@@ -108,7 +106,7 @@ clf(fig); %Clear figure window
 %Matrix 1d, Target Stimulus in Bottom Left Quadrant
 matrix_1d =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1d(10, 8) = 'X'; %Placing target stimulus in BL Quadrant
-disp(matrix_1d)
+
 text(0.5, 0.5, matrix_1d, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1d
 axis off; 
 
@@ -136,7 +134,7 @@ clf(fig); %Clear figure window
 %Matrix 1e, Target Stimulus in Bottom Right Quadrant
 matrix_1e =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1e(7, 15) = 'X'; %Placing target stimulus in BR Quadrant
-disp(matrix_1e);
+
 text(0.5, 0.5, matrix_1e, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1e
 axis off; 
 
