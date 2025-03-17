@@ -10,6 +10,7 @@ axis off;
 disp('Instructions displayed in separate window. Press any key to start.')
 pause; %Wait for participant to press a key to start
 
+clc; %Clear command window
 clf(fig); %Clear the figure window
 text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
 axis off;
