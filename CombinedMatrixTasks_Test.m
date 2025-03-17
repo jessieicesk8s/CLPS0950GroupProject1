@@ -18,7 +18,6 @@ clf(fig); %Clear the figure window
 %Matrix 1a, Target Stimulus in Upper Left Quadrant
 matrix_1a = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1a(2, 4) = 'X'; %Placing target stimulus in UL Quadrant
-disp(matrix_1a)
 
 text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
 axis off;
@@ -49,7 +48,6 @@ clf(fig); %Clear figure window
 %Matrix 1b, Target Stimulus in Bottom Right Quadrant
 matrix_1b = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1b(8, 18) = 'X'; %Placing target stimulus in BR Quadrant
-disp(matrix_1b)
 
 text(0.5, 0.5, matrix_1b, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1b
 axis off; 
@@ -79,7 +77,7 @@ clf(fig); %Clear figure window
 %Matrix 1c, Target Stimulus in Upper Right Quadrant
 matrix_1c = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1c(3, 16) = 'X'; %Placing target stimulus in UR Quadrant
-disp(matrix_1c)
+
 text(0.5, 0.5, matrix_1c, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1c
 axis off; 
 
@@ -108,7 +106,7 @@ clf(fig); %Clear figure window
 %Matrix 1d, Target Stimulus in Bottom Left Quadrant
 matrix_1d =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1d(10, 8) = 'X'; %Placing target stimulus in BL Quadrant
-disp(matrix_1d)
+
 text(0.5, 0.5, matrix_1d, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1d
 axis off; 
 
@@ -136,7 +134,7 @@ clf(fig); %Clear figure window
 %Matrix 1e, Target Stimulus in Bottom Right Quadrant
 matrix_1e =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1e(7, 15) = 'X'; %Placing target stimulus in BR Quadrant
-disp(matrix_1e);
+
 text(0.5, 0.5, matrix_1e, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1e
 axis off; 
 
@@ -194,11 +192,6 @@ for i = 1:num_trials
     target_positions{i} = [target_row, target_col]; % Store the target position
 end
 
-% Create a figure window for the experiment
-%fig = figure('Name', 'Stimulus Search', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
-
-% Clear the figure window and begin the trials immediately
-%clf(fig); % Clear the figure window%
 
 % Trials for trial_idx = 1:num_trials
 for trial_idx = 1:num_trials
@@ -249,9 +242,7 @@ end
 % Compute and display the results
 mean_reaction_time = mean(reaction_times, 'omitnan'); % Compute mean, ignoring NaNs
 overall_accuracy = mean(accuracies) * 100; % Convert to percentage
-%disp('Results:');
-%disp(['Mean Reaction Time: ', num2str(mean_reaction_time), ' seconds']);
-%disp(['Overall Accuracy: ', num2str(overall_accuracy), '%']);%%
+
 
 % Helper function to check the quadrant based on the target location
 function quadrant = get_quadrant(row, col, matrix_size_rows, matrix_size_cols)
