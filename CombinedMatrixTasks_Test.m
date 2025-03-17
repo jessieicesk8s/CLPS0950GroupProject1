@@ -18,7 +18,7 @@ clf(fig); %Clear the figure window
 %Matrix 1a, Target Stimulus in Upper Left Quadrant
 matrix_1a = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1a(2, 4) = 'X'; %Placing target stimulus in UL Quadrant
-disp(matrix_1a)
+%disp(matrix_1a)
 
 text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
 axis off;
