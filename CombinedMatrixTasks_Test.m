@@ -12,14 +12,17 @@ pause; %Wait for participant to press a key to start
 
 clc; %Clear command window
 clf(fig); %Clear the figure window
-text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
-axis off;
+
 
 %Below are Matrices 1a-1e (Jessica's Matrices)
 %Matrix 1a, Target Stimulus in Upper Left Quadrant
 matrix_1a = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1a(2, 4) = 'X'; %Placing target stimulus in UL Quadrant
 disp(matrix_1a)
+
+text(0.5, 0.5, matrix_1a, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1a
+axis off;
+
 
 tic; %Start timer for Matrix 1a Task
 while toc < 10 %Setting a duration of max 10 seconds
@@ -41,13 +44,15 @@ pause(0.5); %Brief pause between matrices
 clc; %Clear command window
 
 clf(fig); %Clear figure window
-text(0.5, 0.5, matrix_1b, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1b
-axis off; 
+
 
 %Matrix 1b, Target Stimulus in Bottom Right Quadrant
 matrix_1b = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1b(8, 18) = 'X'; %Placing target stimulus in BR Quadrant
 disp(matrix_1b)
+
+text(0.5, 0.5, matrix_1b, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1b
+axis off; 
 
 tic; %Start timer for Matrix 1b Task
 while toc < 10 %Set duration of max 10 seconds
@@ -69,13 +74,14 @@ pause(0.5); %Brief pause between matrices
 clc; %Clear command window
 
 clf(fig); %Clear figure window
-text(0.5, 0.5, matrix_1c, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1c
-axis off; 
+
 
 %Matrix 1c, Target Stimulus in Upper Right Quadrant
 matrix_1c = repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1c(3, 16) = 'X'; %Placing target stimulus in UR Quadrant
 disp(matrix_1c)
+text(0.5, 0.5, matrix_1c, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1c
+axis off; 
 
 tic; %Start timer for Matrix 1c Task
 while toc < 10 %Set duration of max 10 seconds
@@ -97,13 +103,14 @@ pause(0.5); %Brief pause between matrices
 clc; %Clear command window
 
 clf(fig); %Clear figure window
-text(0.5, 0.5, matrix_1d, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1d
-axis off; 
+
 
 %Matrix 1d, Target Stimulus in Bottom Left Quadrant
 matrix_1d =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1d(10, 8) = 'X'; %Placing target stimulus in BL Quadrant
 disp(matrix_1d)
+text(0.5, 0.5, matrix_1d, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1d
+axis off; 
 
 tic; %Start timer for Matrix 1d Task
 while toc < 10 %Set duration of max 10 seconds
@@ -125,13 +132,14 @@ pause(0.5); %Brief pause between matrices
 clc; %Clear command window
 
 clf(fig); %Clear figure window
-text(0.5, 0.5, matrix_1e, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1e
-axis off; 
 
 %Matrix 1e, Target Stimulus in Bottom Right Quadrant
 matrix_1e =  repmat('0', 10, 20); %Base 10x20 matrix of zeros
 matrix_1e(7, 15) = 'X'; %Placing target stimulus in BR Quadrant
 disp(matrix_1e);
+text(0.5, 0.5, matrix_1e, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display Matrix 1e
+axis off; 
+
 
 tic; %Start timer for Matrix 1e Task
 while toc < 10 %Duration of max 10 seconds
@@ -153,8 +161,7 @@ pause(0.5); %Brief pause between matrices
 clc; %Clear command window
 clf(fig); %Clear figure window
 
-%Start of Brianna's Matrix_2 Task
-
+%Start of Brianna's Edited Code
 % Parameters
 num_trials = 5; % Number of trials
 matrix_size_rows = 10; % Number of rows in the matrix (10)
@@ -162,10 +169,10 @@ matrix_size_cols = 20; % Number of columns in the matrix (20)
 response_keys = {'q', 'w', 'a', 's'}; % Response keys corresponding to quadrants
 
 % Define the quadrants for the response keys
-quadrants = struct('q', [1, 1], ...
-                   'w', [1, matrix_size_cols / 2 + 1], ...
-                   'a', [matrix_size_rows / 2 + 1, 1], ...
-                   's', [matrix_size_rows / 2 + 1, matrix_size_cols / 2 + 1]);
+quadrants = struct('q', {1:floor(matrix_size_rows/2), 1:floor(matrix_size_cols/2)}, ...   % Top-left quadrant
+                   'w', {1:floor(matrix_size_rows/2), floor(matrix_size_cols/2)+1:matrix_size_cols},...  % Top-right quadrant
+                   'a', {floor(matrix_size_rows/2)+1:matrix_size_rows, 1:floor(matrix_size_cols/2)}, ...  % Bottom-left quadrant
+                   's', {floor(matrix_size_rows/2)+1:matrix_size_rows, floor(matrix_size_cols/2)+1:matrix_size_cols});  % Bottom-right quadrant
 
 % Randomize the order of the matrices for the trials
 trial_order = randperm(num_trials);
@@ -176,6 +183,7 @@ accuracies = zeros(num_trials, 1);
 
 % Create the matrices with the target stimuli
 matrices = cell(1, num_trials); % To hold the matrices
+target_positions = cell(1, num_trials); % To store target positions (row, col)
 for i = 1:num_trials
     matrix2 = repmat('+', matrix_size_rows, matrix_size_cols); % Create the matrix with "+"
     % Randomly choose a target location
@@ -183,12 +191,24 @@ for i = 1:num_trials
     target_col = randi(matrix_size_cols);
     matrix2(target_row, target_col) = 'x'; % Place the target stimulus
     matrices{i} = matrix2; % Store the matrix
+    target_positions{i} = [target_row, target_col]; % Store the target position
 end
 
-% Trials
+% Create a figure window for the experiment
+%fig = figure('Name', 'Stimulus Search', 'NumberTitle', 'off', 'MenuBar', 'none', 'ToolBar', 'none');
+
+% Clear the figure window and begin the trials immediately
+%clf(fig); % Clear the figure window%
+
+% Trials for trial_idx = 1:num_trials
 for trial_idx = 1:num_trials
     % Get the matrix for the current trial in the randomized order
     matrix2 = matrices{trial_order(trial_idx)};
+    
+    % Get the target position for this trial
+    target_position = target_positions{trial_order(trial_idx)};
+    target_row = target_position(1);
+    target_col = target_position(2);
     
     % Clear the figure window before displaying the next matrix
     clf(fig); % Clear the figure window
@@ -198,12 +218,12 @@ for trial_idx = 1:num_trials
     axis off; % Hide axes
     
     % Start timing as the matrix is displayed
-    t_start = tic;  % Start the timer right a the matrix is shown
+    t_start = tic;  % Start the timer right as the matrix is shown
     
     % Pass matrix size to the figure using 'UserData'
     set(fig, 'UserData', struct('matrix_size_rows', matrix_size_rows, 'matrix_size_cols', matrix_size_cols));
     
-    % Wait for the participant to press a key 
+    % Wait for the participant to press a key
     [key_pressed, time_pressed] = waitforkeypress(fig, t_start);
     
     % Record the reaction time (if key was pressed)
@@ -211,9 +231,10 @@ for trial_idx = 1:num_trials
         reaction_time = toc(t_start); % Time from the start of the display to key press
         reaction_times(trial_idx) = reaction_time;
         
-        % Check if the key corresponds to the correct quadrant
+        % Check if the key corresponds to the correct quadrant dynamically based on target position
         correct_quadrant = get_quadrant(target_row, target_col, matrix_size_rows, matrix_size_cols);
-        accuracy = strcmpi(key_pressed, correct_quadrant); 
+        
+        accuracy = strcmpi(key_pressed, correct_quadrant);
         accuracies(trial_idx) = accuracy;
     else
         % No key pressed, do not record reaction time
@@ -221,30 +242,36 @@ for trial_idx = 1:num_trials
         accuracies(trial_idx) = 0; % No accuracy as no key was pressed
     end
     
-    % Show when trials are completed
-    disp(['Finished Trial ', num2str(trial_idx)]);
-    
-    % Pause briefly before the next trial 
+    % Pause briefly before the next trial
     pause(0.5); % Short pause between trials
 end
 
+% Compute and display the results
+mean_reaction_time = mean(reaction_times, 'omitnan'); % Compute mean, ignoring NaNs
+overall_accuracy = mean(accuracies) * 100; % Convert to percentage
+%disp('Results:');
+%disp(['Mean Reaction Time: ', num2str(mean_reaction_time), ' seconds']);
+%disp(['Overall Accuracy: ', num2str(overall_accuracy), '%']);%%
+
 % Helper function to check the quadrant based on the target location
 function quadrant = get_quadrant(row, col, matrix_size_rows, matrix_size_cols)
+    
+    % Check which quadrant the target is located in
     if row <= matrix_size_rows / 2 && col <= matrix_size_cols / 2
-        quadrant = 'Q'; % Top left
+        quadrant = 'q'; % Top left
     elseif row <= matrix_size_rows / 2 && col > matrix_size_cols / 2
-        quadrant = 'W'; % Top right
+        quadrant = 'w'; % Top right
     elseif row > matrix_size_rows / 2 && col <= matrix_size_cols / 2
-        quadrant = 'A'; % Bottom left
+        quadrant = 'a'; % Bottom left
     else
-        quadrant = 'S'; % Bottom right
+        quadrant = 's'; % Bottom right
     end
 end
 
 % Function to wait for key press inside the figure window
 function [key, time] = waitforkeypress(fig, t_start)
-    key = ''; % Initialize
-    time = NaN;
+    key = '';
+    time = NaN; 
     
     % Set the figure to capture key presses
     set(fig, 'KeyPressFcn', @(src, event) keyPressCallback(src, event));
@@ -257,6 +284,7 @@ function [key, time] = waitforkeypress(fig, t_start)
     % Cleanup after key press
     set(fig, 'KeyPressFcn', ''); % Stop capturing keys
     
+    % Nested function to handle key press event
     function keyPressCallback(src, event)
         key = event.Key; % Capture the key pressed
         time = toc(t_start); % Record the time when key was pressed
@@ -274,6 +302,7 @@ function [key, time] = waitforkeypress(fig, t_start)
         drawnow; % Immediately update the figure
     end
 end
+
 
 clc; %Clear command window
 clf(fig); %Clear figure window
