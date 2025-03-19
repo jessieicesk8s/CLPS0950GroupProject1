@@ -318,3 +318,5 @@ final_results = sprintf(['Matrix 1 Results\n\n' ...
 text(0.5, 0.5, final_results, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display previously defined final results of experiment
 axis off;
 disp('Experiment is complete. Thank you for your participation!') %Display this final message for participants in the command window
+
+save("Participant1", "mean_reactiontime", "overall_accuracy1", "mean_reaction_time", "overall_accuracy");
