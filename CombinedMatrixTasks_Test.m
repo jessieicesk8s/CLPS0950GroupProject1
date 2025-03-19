@@ -317,4 +317,4 @@ final_results = sprintf(['Matrix 1 Results\n\n' ...
     'Overall Percent Accurate: ', num2str(overall_accuracy)]); %Define final_results to be displayed
 text(0.5, 0.5, final_results, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display previously defined final results of experiment
 axis off;
-disp('Experiment is complete. Thank you for your partcipation!') %Display this final message for participants in the command window
+disp('Experiment is complete. Thank you for your participation!') %Display this final message for participants in the command window
