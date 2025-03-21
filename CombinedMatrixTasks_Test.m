@@ -320,6 +320,6 @@ axis off;
 disp('Experiment is complete. Thank you for your participation!') %Display this final message for participants in the command window
 
 %CHANGE PARTICIPANT ID WITH EVERY TRIAL UNTIL WE REACH 10
-Participant_ID = 'P04'; %Naming Individual Participants
+Participant_ID = 'P05'; %Naming Individual Participants
 Filename = sprintf('Participant_%s_Results.mat', Participant_ID);
 save(Filename, 'mean_reactiontime', 'overall_accuracy1', 'mean_reaction_time', 'overall_accuracy'); %Save participant data to separate .mat file
