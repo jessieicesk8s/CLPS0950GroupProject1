@@ -321,64 +321,91 @@ final_results = sprintf(['Matrix 1 Results\n\n' ...
 text(0.5, 0.5, final_results, 'FontSize', 15, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle'); %Display previously defined final results of experiment
 axis off;
 
-%Collecting and visualizing participant data
+
+
+
+%Collecting and visualizing participant data (draft 2)
+
+
+subj_rt = 'reaction_times.mat'; 
+subj_acc = 'accuracies.mat'; 
+
+writematrix(reaction_times, subj_rt, 'WriteMode', 'append');
+writematrix(accuracies, subj_acc, 'WriteMode', 'append');
+
+disp('Results Saved!');
+
+
+
+
+
+
+
+
+
+
+%Collecting and visualizing participant data draft 1- (does not work, going
+%to scrap all of this)
 
 % Store reaction times and accuracies 
-reaction_times = NaN(num_trials, 1);  
-accuracies = NaN(num_trials, 1);     
+%reaction_times = NaN(num_trials, 1);  
+%accuracies = NaN(num_trials, 1);     
 
 
-for trial_idx = 1:num_trials
-    reaction_times(trial_idx) = reaction_times(trial_idx); 
-    accuracies(trial_idx) = accuracies(trial_idx);         
-end
+%for trial_idx = 1:num_trials
+    %reaction_times(trial_idx) = reaction_times(trial_idx); 
+    %accuracies(trial_idx) = accuracies(trial_idx);         
+%end%
 
 % Seperating task 1 from task 2
-if num_trials >= 5
-    task1_rt = reaction_times(1:5);
-    task1_ac = accuracies(1:5);
+%if num_trials >= 5
+    %task1_rt = reaction_times(1:5);
+    %task1_ac = accuracies(1:5);
     
   
-    task2_rt = reaction_times(end-4:end);
-    task2_ac = accuracies(end-4:end);
+    %task2_rt = reaction_times(end-4:end);
+    %task2_ac = accuracies(end-4:end);
     
     % Calcualte mean reaction time and accuracy 
-    meantask1_rt = mean(task1_rt, 'omitnan');
-    meantask2_rt = mean(task2_rt, 'omitnan');
+    %meantask1_rt = mean(task1_rt, 'omitnan');
+    %meantask2_rt = mean(task2_rt, 'omitnan');
     
-    meantask1_ac = mean(task1_ac, 'omitnan') * 100; 
-    meantask2ac = mean(task2_ac, 'omitnan') * 100; 
+    %meantask1_ac = mean(task1_ac, 'omitnan') * 100; 
+    %meantask2ac = mean(task2_ac, 'omitnan') * 100; 
     
     % Display data
-    disp(['Task 1 - Mean Reaction Time: ', num2str(meantask1_rt), ' seconds']);
-    disp(['Task 2- Mean Reaction Time: ', num2str(meanLast5RT), ' seconds']);
-    disp(['Task 1 - Accuracy: ', num2str(meantask1_ac), '%']);
-    disp(['Task2 - Accuracy: ', num2str(meantask2ac), '%']);
+    %disp(['Task 1 - Mean Reaction Time: ', num2str(meantask1_rt), ' seconds']);
+    %disp(['Task 2- Mean Reaction Time: ', num2str(meanLast5RT), ' seconds']);
+    %disp(['Task 1 - Accuracy: ', num2str(meantask1_ac), '%']);
+    %disp(['Task2 - Accuracy: ', num2str(meantask2ac), '%']);
     
     % Create a figure for the data comparison
-    figure;
+    %figure;
     
     % Reaction time visual
-    subplot(1, 2, 1); 
-    bar([meantask1_rt, meanLast5RT]);
-    title('Reaction Time Comparison');
-    ylabel('Reaction Time (seconds)');
-    set(gca, 'XTickLabel', {'Task 1', 'Task 2'});
+    %subplot(1, 2, 1); 
+   % bar([meantask1_rt, meanLast5RT]);
+    %title('Reaction Time Comparison');
+    %ylabel('Reaction Time (seconds)');
+    %set(gca, 'XTickLabel', {'Task 1', 'Task 2'});
     
     % Accuracy visual
-    subplot(1, 2, 2); 
-    bar([meantask1_ac, meantask2ac]);
-    title('Accuracy Comparison');
-    ylabel('Accuracy (%)');
-    set(gca, 'XTickLabel', {'First 5', 'Last 5'});
+    %subplot(1, 2, 2); 
+    %bar([meantask1_ac, meantask2ac]);
+    %title('Accuracy Comparison');
+    %ylabel('Accuracy (%)');
+    %set(gca, 'XTickLabel', {'First 5', 'Last 5'});
     
     % Title
-    sgtitle('Stimulus Search Results');
-else
-    disp('Complete all the trials to view your results');
-end
+    %sgtitle('Stimulus Search Results');
+%else
+    %disp('Complete all the trials to view your results');
+%end
 
 % The End 
-clc;
-clf(fig);
-disp('Experiment is complete. Thank you for your participation!');
+%clc;
+%clf(fig);
+%disp('Experiment is complete. Thank you for your participation!');%
+
+% Code for adding data without overwriting data? : save(filename, 'subject data', '-append');
+
