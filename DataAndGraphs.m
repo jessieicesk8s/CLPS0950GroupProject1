@@ -34,16 +34,16 @@ figure;
 %Bar Graph 1: Reaction Times
 subplot(1, 2, 1);
 bar([group_mean_reactiontime, group_mean_reaction_time]);
+set(gca, 'XTickLabel', {'Matrix 1', 'Matrix 2'});
 title('Average Reaction Times');
-xlabel('Matrix #');
 ylabel('Time (seconds)');
 ylim([0, 10]);
 
 %Bar Graph 2: Accuracy
 subplot(1, 2, 2);
 bar([group_overall_accuracy1, group_overall_accuracy]);
+set(gca, 'XTickLabel', {'Matrix 1', 'Matrix 2'});
 title('Average Accuracy');
-xlabel('Matrix #');
 ylabel('Percent Correct');
 ylim([0, 100]);
 
