@@ -1,37 +1,51 @@
-%Switching up the plan a bit: here will take the means from each
-%Participant text file and create the bar graph accordingly
+%Here, the plan is to extract the data from the 10 Participant files,
+%calculate their means, and visualize them in bar graph form
 
+num_participants = 10;
+mean_reactiontime = zeros(num_participants, 1);
+mean_reaction_time = zeros(num_participants, 1);
+overall_accuracy1 = zeros(num_participants, 1);
+overall_accuracy = zeros(num_participants, 1);
 
+for i = 1:num_participants
+    Participant_ID = sprintf('P%02d', i);
+    Filename = sprintf('Participant_%s_Results.mat', Participant_ID);
 
-%data = read('Participant1.mat');
+    if exist(Filename, 'file')
+        loadedData = load(Filename);
 
-%mean_reactiontime = date(:, 1);
-%overall_accuracy1 = data(:, 2);
-%mean_reaction_time = data(:, 3);
-%overall_accuracy = data(:, 4);
+        mean_reactiontime(i) = loadedData.mean_reactiontime;
+        mean_reaction_time(i) = loadedData.mean_reaction_time;
+        overall_accuracy1(i) = loadedData.overall_accuracy1;
+        overall_accuracy(i) = loadedData.overall_accuracy;
 
+    else
+        warning('File %s not found.', Filename);
+    end
+end
 
-%read Participant1.mat
-%read Participant2.mat
-%etc.
+group_mean_reactiontime = mean(mean_reactiontime);
+group_mean_reaction_time = mean(mean_reaction_time);
+group_overall_accuracy1 = mean(overall_accuracy1);
+group_overall_accuracy = mean(overall_accuracy);
 
 figure;
 
-x = ["Matrix 1" "Matrix 2"];
-y1 = [mean_grouptime1, mean_grouptime2]; %comma in between
-y2 = [mean_groupaccuracy1; mean_groupaccuracy2]; %semicolon in between
-
 %Bar Graph 1: Reaction Times
 subplot(1, 2, 1);
-bar(x,y1);
+bar([group_mean_reactiontime, group_mean_reaction_time]);
 title('Average Reaction Times');
-ylabel('Seconds)')
+xlabel('Matrix #');
+ylabel('Time (seconds)');
+ylim([0, 10]);
 
 %Bar Graph 2: Accuracy
 subplot(1, 2, 2);
-bar(x,y2);
+bar([group_overall_accuracy1, group_overall_accuracy]);
 title('Average Accuracy');
+xlabel('Matrix #');
 ylabel('Percent Correct');
+ylim([0, 100]);
 
 sgtitle('Stimulus Search Final Results');
 
