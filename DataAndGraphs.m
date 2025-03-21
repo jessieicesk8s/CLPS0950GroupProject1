@@ -3,7 +3,7 @@
 
 
 
-data = read('Participant1.mat');
+%data = read('Participant1.mat');
 
 %mean_reactiontime = date(:, 1);
 %overall_accuracy1 = data(:, 2);
