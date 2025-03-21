@@ -1,9 +1,19 @@
 %Switching up the plan a bit: here will take the means from each
 %Participant text file and create the bar graph accordingly
 
-read Participant1.mat
-read Participant2.mat
-etc.
+
+
+data = read('Participant1.mat');
+
+%mean_reactiontime = date(:, 1);
+%overall_accuracy1 = data(:, 2);
+%mean_reaction_time = data(:, 3);
+%overall_accuracy = data(:, 4);
+
+
+%read Participant1.mat
+%read Participant2.mat
+%etc.
 
 figure;
 

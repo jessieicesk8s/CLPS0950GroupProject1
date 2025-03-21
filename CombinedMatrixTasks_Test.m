@@ -319,4 +319,5 @@ text(0.5, 0.5, final_results, 'FontSize', 15, 'HorizontalAlignment', 'center', '
 axis off;
 disp('Experiment is complete. Thank you for your participation!') %Display this final message for participants in the command window
 
-save("Participant1", "mean_reactiontime", "overall_accuracy1", "mean_reaction_time", "overall_accuracy");
+%save("Participant1.csv", "mean_reactiontime", "overall_accuracy1", "mean_reaction_time", "overall_accuracy");
+save('Participant1.mat', 'mean_reactiontime', 'overall_accuracy1', 'mean_reaction_time', 'overall_accuracy');
